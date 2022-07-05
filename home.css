@@ -1,0 +1,12 @@
+#mygamelishurl a{
+    float: left;
+    padding: 5px 15px;
+    border: 2px solid #ccc;
+    margin: 5px;
+    color: #000;
+}
+header{
+    font-size: 35px;
+    border: 2px solid;
+    margin: 2px;
+}

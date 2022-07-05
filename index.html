@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Game Anim Tred</title>
+		<link rel="stylesheet" href="home.css">
+	</head>
+	<body>
+		<div id="home">
+			<center>
+				<header><pre>Anim Tred URL myFavorite</pre></header>
+			</center>
+			<div id="mygamelishurl">loading...</div>
+		</div>
+		<div id="playerframe" style="display: none;">
+			<div style="position: absolute; left: 12px; top: 15px;">
+				<button onclick="goBackG()" style=" font-size: 20px;">Go Back</button>
+				<button onclick="shareURL(document.getElementById('playerframemyiframe').src)" style=" font-size: 20px;">Share URL</button>
+			</div>
+			<h2 id="playerframename" style="font-size: 35px; text-align: center; bottom: 15px; font-family: sans-serif; margin: 5px;"></h2>
+			<center><iframe id="playerframemyiframe" allowfullscreen=""></iframe></center>
+		</div>
+		<script>
+			setInterval(actframe, 20);
+			function actframe() {
+				document.getElementById("playerframemyiframe").width = window.innerWidth - 26;
+				document.getElementById("playerframemyiframe").height = window.innerHeight - 70;
+			}
+			function shareURL(url) {
+				alert(url);
+			}
+			function goBackG() {
+				document.getElementById("home").style.display = '';
+				document.getElementById("playerframe").style.display = 'none';
+				document.getElementById("playerframemyiframe").src = '';
+			}
+			function BlobURLhttp(s) {
+				var txt = '';
+				for (var i = 0; i < 22; i += 1) {
+					txt += ('' + s.charAt(i))
+				}
+				if (txt == 'data:text/html;base64,') {
+					var txt2 = '';
+					for (var i = 22; i < s.length; i += 1) {
+						txt2 += ('' + s.charAt(i))
+					}
+					return window.URL.createObjectURL(new Blob([window.atob(txt2)], { type: 'text/html' }));
+				} else {
+					return s;
+				}
+			}
+			function openframe(url,name) {
+				document.getElementById("home").style.display = 'none';
+				document.getElementById("playerframe").style.display = ''; // data:text/html;base64,
+				document.getElementById("playerframemyiframe").src = BlobURLhttp(url);
+				actframe()
+				document.getElementById("playerframename").innerHTML = name;
+			}
+			function getGameHTTPS() {
+				const xmlhttp = new XMLHttpRequest();
+				xmlhttp.onload = function() {
+					document.getElementById("mygamelishurl").innerHTML = '';
+					const listSc = this.response.links;
+					for (var i = 0; i < listSc.length; i += 1) {
+						var a = document.createElement("a");
+						a.innerHTML = listSc[i].title;
+						a.href = "#";
+						a.srcD = listSc[i].source;
+						a.nameG = listSc[i].title;
+						a.onclick = function() {
+							openframe(this.srcD,this.nameG)
+						}
+						document.getElementById("mygamelishurl").appendChild(a);
+					}
+				}
+				xmlhttp.responseType = "json";
+				xmlhttp.open("GET", "mylink.json");
+				xmlhttp.send();
+			}
+			getGameHTTPS()
+		</script>
+	</body>
+</html>
